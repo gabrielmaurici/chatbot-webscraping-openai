@@ -1,0 +1,12 @@
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/bin/Debug/net8.0/WebScraping.ChatGpt.Domain.deps.json
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/bin/Debug/net8.0/WebScraping.ChatGpt.Domain.dll
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/bin/Debug/net8.0/WebScraping.ChatGpt.Domain.pdb
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.AssemblyInfoInputs.cache
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.AssemblyInfo.cs
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.csproj.CoreCompileInputs.cache
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.sourcelink.json
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.dll
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/refint/WebScraping.ChatGpt.Domain.dll
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/WebScraping.ChatGpt.Domain.pdb
+/home/gabriel/projetos/chatbot-webscraping-chatgpt/web-scraping-chatgpt/src/WebScraping.ChatGpt.Domain/obj/Debug/net8.0/ref/WebScraping.ChatGpt.Domain.dll
