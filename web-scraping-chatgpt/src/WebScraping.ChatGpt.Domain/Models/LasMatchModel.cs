@@ -11,11 +11,11 @@ public class LastMatchModel : MatchBaseModel
                $"📆 Data: {Date}\n" +
                $"⚽ {HomeTeam} {Score.Replace("\n", "")} {VisitingTeam}\n\n" +
                "📊 Estatísticas\n" +
-               $"------ Posse de bola ------\n" +
+               $"      Posse de bola\n" +
                $"{HomeTeam} {Statistics.HomeBallPossession} | {Statistics.VisitingBallPossession} {VisitingTeam}\n" +
-               $"------ Tentativas de gol ------\n" + 
+               $"      Tentativas de gol\n" + 
                $"{HomeTeam} {Statistics.HomeGoalAttempts} | {Statistics.VisitingGoalAttempts} {VisitingTeam}\n" +
-               $"------ Finalizações ------\n" +
+               $"      Finalizações\n" +
                $"{HomeTeam} {Statistics.HomeFinishes} | {Statistics.VisitingFinishes} {VisitingTeam}\n\n" +
                $"Assita aos melhores momentos: {UrlBestMoments}";
     }
