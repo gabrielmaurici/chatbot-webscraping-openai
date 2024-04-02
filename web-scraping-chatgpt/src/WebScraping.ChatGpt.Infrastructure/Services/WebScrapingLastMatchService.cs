@@ -31,31 +31,31 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
         var visitingTeamName = GetVisitingTeamName();
         var matchScore = GetMatchScore();
         
-        var homeBallPossession = GetHomeBallPossession();
-        var visitingBallPossession = GetVisitingBallPossession();
-        var homeGoalAttempts = GetHomeGoalAttempts();
-        var visitingGoalAttempts = GetVisitingGoalAttempts();
+        var homeBallPossession = string.Empty;
+        var visitingBallPossession = string.Empty;
+        var homeGoalAttempts = string.Empty;
+        var visitingGoalAttempts = string.Empty;
         var homeFinishes = string.Empty;
         var visitingFinishes = string.Empty;
         
 
-        var teste = _driver.FindElements(By.XPath("//div[@class='_category_1csk6_16']"));
+        var teste = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
         foreach(var item in teste) {
             var nome = item.Text.Replace("\n", " ");
 
             if (nome.Contains("Posse de bola")) {
-                homeBallPossession = item.FindElement(By.ClassName("_homeValue_1c6mj_10")).Text;
-                visitingBallPossession = item.FindElement(By.ClassName("_awayValue_1c6mj_14")).Text;
+                homeBallPossession = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                visitingBallPossession = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
             
             if (nome.Contains("Tentativas de gol")) {
-                homeGoalAttempts = item.FindElement(By.ClassName("_homeValue_1c6mj_10")).Text;
-                visitingGoalAttempts = item.FindElement(By.ClassName("_awayValue_1c6mj_14")).Text;
+                homeGoalAttempts = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                visitingGoalAttempts = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
 
             if (nome.Contains("Finalizações")) {
-                homeFinishes = item.FindElement(By.ClassName("_homeValue_1c6mj_10")).Text;
-                visitingFinishes = item.FindElement(By.ClassName("_awayValue_1c6mj_14")).Text;
+                homeFinishes = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                visitingFinishes = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
 
         }

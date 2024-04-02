@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebScraping.ChatGpt.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+789ef491f2f1b601f78cf50e15bb9bc60fd97205")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b17955e5ccafd5cbed4feb7b562cef9223213401")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebScraping.ChatGpt.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebScraping.ChatGpt.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

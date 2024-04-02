@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "WebScraping.ChatGpt.Grpc";
+
+package webScraping;
+
+import "google/protobuf/empty.proto";
+
+service WebScraping {
+  rpc GetLastMatch (google.protobuf.Empty) returns (LastMatchReply);
+}
+
+message LastMatchReply {
+  string lastMatch = 1;
+}
