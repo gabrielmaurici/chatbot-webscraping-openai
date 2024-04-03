@@ -1,9 +1,13 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const webScrapingService = require('./grpc/services/webScrapingService')
+const webScrapingService = require('./grpc/services/webScrapingService');
 
 const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    webVersionCache: {
+        type: 'remote',
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2409.0.html',
+    }
 });
 
 client.once('ready', () => {

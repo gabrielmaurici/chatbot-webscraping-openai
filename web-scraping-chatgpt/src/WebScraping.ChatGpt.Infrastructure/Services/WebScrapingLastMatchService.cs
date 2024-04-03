@@ -21,6 +21,7 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
     public Task<LastMatchModel> ExecuteScraping()
     {
         GoToUrlOfLatestMatch();
+        ClickAcceptCookies();
 
         ClickOnResultOfLastMatch();
         _driver.SwitchTo().Window(_driver.WindowHandles.Last());
@@ -30,39 +31,8 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
         var homeTeamName = GetHomeTeamName();
         var visitingTeamName = GetVisitingTeamName();
         var matchScore = GetMatchScore();
-        
-        var homeBallPossession = string.Empty;
-        var visitingBallPossession = string.Empty;
-        var homeGoalAttempts = string.Empty;
-        var visitingGoalAttempts = string.Empty;
-        var homeFinishes = string.Empty;
-        var visitingFinishes = string.Empty;
-        
-
-        var teste = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
-        foreach(var item in teste) {
-            var nome = item.Text.Replace("\n", " ");
-
-            if (nome.Contains("Posse de bola")) {
-                homeBallPossession = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                visitingBallPossession = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
-            
-            if (nome.Contains("Tentativas de gol")) {
-                homeGoalAttempts = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                visitingGoalAttempts = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
-
-            if (nome.Contains("Finalizações")) {
-                homeFinishes = item.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                visitingFinishes = item.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
-
-        }
-
-        _driver.FindElement(By.XPath("//*[@id='detail']/div[7]/div/a[5]")).Click();
-        Thread.Sleep(5000);
-        var urlMoments = _driver.FindElement(By.XPath("//*[@id='detail']/div[8]/div[2]/div/object")).GetAttribute("data");
+        var statisticsModel = GetStatistics();
+        string urlMoments = GetUrlBestMoments();
 
         var response = new LastMatchModel
         {
@@ -71,33 +41,31 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
             HomeTeam = homeTeamName,
             Score = matchScore,
             VisitingTeam = visitingTeamName,
-            Statistics = new StatisticsModel {
-                HomeBallPossession = homeBallPossession,
-                VisitingBallPossession = visitingBallPossession,
-                HomeGoalAttempts = homeGoalAttempts,
-                VisitingGoalAttempts = visitingGoalAttempts,
-                HomeFinishes = homeFinishes,
-                VisitingFinishes = visitingFinishes 
-            },
+            Statistics = statisticsModel,
             UrlBestMoments = urlMoments
         };
 
         _driver.Quit();
-
         return Task.FromResult(response);
     }
 
     private void GoToUrlOfLatestMatch()
     {
         _driver.Navigate().GoToUrl(URL);
-        Thread.Sleep(3000);
+        Thread.Sleep(1500);
+    }
+
+    private void ClickAcceptCookies()
+    {
+        var resultado = _driver.FindElement(By.XPath("//*[@id='onetrust-accept-btn-handler']"));
+        resultado.Click();
     }
 
     private void ClickOnResultOfLastMatch()
     {
         var resultado = _driver.FindElement(By.XPath("//div[@class='event__match event__match--static event__match--twoLine']"));
         resultado.Click();
-        Thread.Sleep(5000);
+        Thread.Sleep(1500);
     }
 
     private string GetTournamentName()
@@ -129,23 +97,38 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
         return _driver.FindElement(By.XPath("//div[@class='detailScore__wrapper']")).Text;
     }
 
-    private string GetHomeBallPossession()
+    private StatisticsModel GetStatistics()
     {
-        return _driver.FindElement(By.XPath("//div[@class='_value_1c6mj_5 _homeValue_1c6mj_10']")).Text;
+        var statistics = new StatisticsModel();
+        var statisticsElement = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
+        foreach (var statistic in statisticsElement)
+        {
+            var statisticName = statistic.Text.Replace("\n", " ");
+            if (statisticName.Contains("Posse de bola"))
+            {
+                statistics.HomeBallPossession = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                statistics.VisitingBallPossession = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+            }
+            if (statisticName.Contains("Tentativas de gol"))
+            {
+                statistics.HomeGoalAttempts = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                statistics.VisitingGoalAttempts = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+            }
+            if (statisticName.Contains("Finalizações"))
+            {
+                statistics.HomeFinishes = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                statistics.VisitingFinishes = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+            }
+        }
+
+        return statistics;
     }
 
-    private string GetVisitingBallPossession()
+    private string GetUrlBestMoments()
     {
-        return _driver.FindElement(By.XPath("//div[@class='_value_1c6mj_5 _awayValue_1c6mj_14']")).Text;
-    }
-
-    private string GetHomeGoalAttempts()
-    {
-        return _driver.FindElement(By.XPath("//div[@class='_value_1c6mj_5 _homeValue_1c6mj_10']")).Text;
-    }
-
-    private string GetVisitingGoalAttempts()
-    {
-        return _driver.FindElement(By.XPath("//div[@class='_value_1c6mj_5 _homeValue_1c6mj_10']")).Text;
+        _driver.FindElement(By.XPath("//*[@id='detail']/div[7]/div/a[5]")).Click();
+        Thread.Sleep(1000);
+        var urlMoments = _driver.FindElement(By.XPath("//*[@id='detail']/div[8]/div[2]/div/object")).GetAttribute("data");
+        return urlMoments;
     }
 }

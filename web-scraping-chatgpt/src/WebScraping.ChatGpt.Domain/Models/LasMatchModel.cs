@@ -7,16 +7,16 @@ public class LastMatchModel : MatchBaseModel
 
     public override string ToString()
     {
-        return $"🏆 Campeonato {Tournament}\n\n" +
-               $"📆 Data: {Date}\n" +
-               $"⚽ {HomeTeam} {Score.Replace("\n", "")} {VisitingTeam}\n\n" +
-               "📊 Estatísticas\n" +
-               $"      Posse de bola\n" +
-               $"{HomeTeam} {Statistics.HomeBallPossession} | {Statistics.VisitingBallPossession} {VisitingTeam}\n" +
-               $"      Tentativas de gol\n" + 
-               $"{HomeTeam} {Statistics.HomeGoalAttempts} | {Statistics.VisitingGoalAttempts} {VisitingTeam}\n" +
-               $"      Finalizações\n" +
-               $"{HomeTeam} {Statistics.HomeFinishes} | {Statistics.VisitingFinishes} {VisitingTeam}\n\n" +
-               $"Assita aos melhores momentos: {UrlBestMoments}";
+        return $"🏆 *Campeonato {Tournament}*\n\n" +
+               $"📆 *Data:* {Date.Replace(".", "/").Replace(" ", " - ")} hrs\n" +
+               $"🏟️ *Placar:* {HomeTeam} {Score.Replace("\n", "")} {VisitingTeam}\n\n" +
+               "📊 *Estatísticas*\n" +
+               $"*Posse de bola* ⚽\n" +
+               $"{HomeTeam} {Statistics.HomeBallPossession} - {Statistics.VisitingBallPossession} {VisitingTeam}\n\n" +
+               $"*Tentativas de gol* 🥅\n" +
+               $"{HomeTeam} {Statistics.HomeGoalAttempts} - {Statistics.VisitingGoalAttempts} {VisitingTeam}\n\n" +
+               $"*Finalizações* ✅\n" +
+               $"{HomeTeam} {Statistics.HomeFinishes} - {Statistics.VisitingFinishes} {VisitingTeam}\n\n" +
+               $"🎥 Assita aos melhores momentos: {UrlBestMoments}";
     }
 }
