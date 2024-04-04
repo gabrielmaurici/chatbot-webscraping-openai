@@ -5,24 +5,15 @@ using WebScraping.ChatGpt.Domain.Services;
 
 namespace WebScraping.ChatGpt.Infrastructure;
 
-public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
+public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebScrapingService<LastMatchModel>
 {
-    private readonly ChromeDriver _driver;
-    private const string URL = "https://www.flashscore.com.br/equipe/fluminense/EV9L3kU4/resultados/";
-
-    public WebScrapingLastMatchService()
-    {
-        var options = new ChromeOptions();
-        options.AddArgument("start-maximized");
-
-        _driver = new(options); 
-    }
+    private readonly ChromeDriver _driver = new();
+    private readonly string _teamResultsUrl = teamResultsUrl;
 
     public Task<LastMatchModel> ExecuteScraping()
     {
         GoToUrlOfLatestMatch();
         ClickAcceptCookies();
-
         ClickOnResultOfLastMatch();
         _driver.SwitchTo().Window(_driver.WindowHandles.Last());
 
@@ -32,7 +23,7 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
         var visitingTeamName = GetVisitingTeamName();
         var matchScore = GetMatchScore();
         var statisticsModel = GetStatistics();
-        string urlMoments = GetUrlBestMoments();
+        var urlMoments = GetUrlBestMoments();
 
         var response = new LastMatchModel
         {
@@ -51,8 +42,8 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
 
     private void GoToUrlOfLatestMatch()
     {
-        _driver.Navigate().GoToUrl(URL);
-        Thread.Sleep(1500);
+        _driver.Navigate().GoToUrl(_teamResultsUrl);
+        Thread.Sleep(1000);
     }
 
     private void ClickAcceptCookies()
@@ -63,9 +54,9 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
 
     private void ClickOnResultOfLastMatch()
     {
-        var resultado = _driver.FindElement(By.XPath("//div[@class='event__match event__match--static event__match--twoLine']"));
+        var resultado = _driver.FindElement(By.ClassName("event__match"));
         resultado.Click();
-        Thread.Sleep(1500);
+        Thread.Sleep(1000);
     }
 
     private string GetTournamentName()
@@ -126,9 +117,21 @@ public class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
 
     private string GetUrlBestMoments()
     {
-        _driver.FindElement(By.XPath("//*[@id='detail']/div[7]/div/a[5]")).Click();
-        Thread.Sleep(1000);
-        var urlMoments = _driver.FindElement(By.XPath("//*[@id='detail']/div[8]/div[2]/div/object")).GetAttribute("data");
-        return urlMoments;
+        try 
+        {
+            var bestMomentsElement = _driver.FindElement(By.ClassName("matchReportBoxes"));
+            bestMomentsElement.Click();
+
+            Thread.Sleep(1000);
+            var urlMoments = _driver.FindElement(By.TagName("object")).GetAttribute("data");
+
+            return urlMoments;
+        }
+        catch(Exception ex) 
+        {
+            if (ex is NoSuchElementException || ex is ElementNotInteractableException)
+                return "Não foi possível encontrar o vídeo com os melhores momentos da partida";
+            throw;
+        }
     }
 }

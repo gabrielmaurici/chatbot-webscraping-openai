@@ -1,21 +1,22 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using WebScraping.ChatGpt.Infrastructure;
+using WebScraping.ChatGpt.Infrastructure.Services;
 
 namespace WebScraping.ChatGpt.Grpc.Services;
 
 public class WebScrapingService : WebScraping.WebScrapingBase
 {
-    private readonly ILogger<WebScrapingService> _logger;
-    public WebScrapingService(ILogger<WebScrapingService> logger)
+    public override async Task<LastMatchReply> GetLastMatch(LastMatchRequest request, ServerCallContext context)
     {
-        _logger = logger;
-    }
+        Console.WriteLine("Alguma coisa: " + request.Team);
+        WebScrapingLastMatchService webScrapingService = request.Team switch {
+            "Fluminense" => new FluminenseLastMatchService(),
+            "Flamengo" => new FlamengoLastMatchService(),
+            "Brusque" => new BrusqueLastMatchService(),
+            _ => throw new Exception("Nenhum time correspondente")
+        };
 
-    public override async Task<LastMatchReply> GetLastMatch(Empty request, ServerCallContext context)
-    {
-        var teste = new WebScrapingLastMatchService();
-        var response = await teste.ExecuteScraping();
+        var response = await webScrapingService.ExecuteScraping();
         
         return new LastMatchReply {
             LastMatch = response.ToString()

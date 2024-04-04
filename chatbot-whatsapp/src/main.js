@@ -20,16 +20,23 @@ client.on('qr', (qr) => {
 
 client.on('message_create', message => {
     if (message.body === "Flu") {
-        getLastMatchFlu(message);
+        getLastMatch(message, "Fluminense");
+    }
+    if (message.body === "Fla") {
+        getLastMatch(message, "Flamengo");
+    }
+    if (message.body === "Brusque") {
+        getLastMatch(message, "Brusque");
     }
 });
 
-async function getLastMatchFlu(message) {
+async function getLastMatch(message, team) {
     try {
-        const lastMatch = await webScrapingService.getLastMatch();
-        client.sendMessage(message.from, lastMatch);
+        let lastMatch = await webScrapingService.getLastMatch(team);
+        message.reply(lastMatch)
+        
     } catch (error) {
-        client.sendMessage(message.from, 'Ocorreu um erro ao obter a última partida.');
+        message.reply("Ocorreu algum erro ao obter a última partida: " + error);
     }
 }
 

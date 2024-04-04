@@ -2,10 +2,12 @@ syntax = "proto3";
 
 package webScraping;
 
-import "google/protobuf/empty.proto";
-
 service WebScraping {
-  rpc GetLastMatch (google.protobuf.Empty) returns (LastMatchReply);
+  rpc GetLastMatch (LastMatchRequest) returns (LastMatchReply);
+}
+
+message LastMatchRequest {
+  string team = 1;
 }
 
 message LastMatchReply {

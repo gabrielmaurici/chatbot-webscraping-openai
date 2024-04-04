@@ -1,17 +1,24 @@
+const path = require('path');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-async function getLastMatch() {
+async function getLastMatch(team) {
   return new Promise((resolve, reject) => {
-    const packageDefinition = protoLoader.loadSync('/home/gabriel/projetos/chatbot-webscraping-chatgpt/chatbot-whatsapp/src/grpc/protos/webScraping.proto');
+    const protoFilePath = path.join(__dirname, '../protos/webScraping.proto');
+    console.log(protoFilePath);
+
+    const packageDefinition = protoLoader.loadSync(protoFilePath);
     const webScrapingProto = grpc.loadPackageDefinition(packageDefinition).webScraping;
 
     const client = new webScrapingProto.WebScraping('localhost:5100', grpc.credentials.createInsecure());
 
-    client.GetLastMatch({}, (error, response) => {
+    const request = {
+      team: team 
+    }
+
+    client.GetLastMatch(request, (error, response) => {
       if (error) {
-        reject(error);
-        return;
+        return error;
       }
       resolve(response.lastMatch);
     });
@@ -19,5 +26,5 @@ async function getLastMatch() {
 }
 
 module.exports = { 
-    getLastMatch
+  getLastMatch
 }
