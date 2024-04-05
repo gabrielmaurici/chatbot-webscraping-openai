@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Infrastructure", "WebScraping.ChatGpt.Infrastructure\WebScraping.ChatGpt.Infrastructure.csproj", "{C0BEBBD8-1F96-4E2D-B0A9-17F50057638F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste", "Teste\Teste.csproj", "{80F253A3-E560-4B12-919D-3A6966846E33}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Grpc", "WebScraping.ChatGpt.Grpc\WebScraping.ChatGpt.Grpc.csproj", "{42900241-1F6F-413C-A3F8-353A176CB4C6}"
 EndProject
 Global
