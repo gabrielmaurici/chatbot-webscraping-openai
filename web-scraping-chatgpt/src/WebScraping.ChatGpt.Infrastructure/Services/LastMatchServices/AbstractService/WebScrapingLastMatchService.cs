@@ -3,7 +3,7 @@ using OpenQA.Selenium.Chrome;
 using WebScraping.ChatGpt.Domain.Models;
 using WebScraping.ChatGpt.Domain.Services;
 
-namespace WebScraping.ChatGpt.Infrastructure;
+namespace WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
 
 public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebScrapingService<LastMatchModel>
 {
@@ -19,6 +19,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
 
         var tournamentName = GetTournamentName();
         var departureDateTime = GetDepartureDateTime();
+        var stadiumName = GetStadiumName();
         var homeTeamName = GetHomeTeamName();
         var visitingTeamName = GetVisitingTeamName();
         var matchScore = GetMatchScore();
@@ -29,6 +30,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
         {
             Tournament = tournamentName,
             Date = departureDateTime,
+            Stadium = stadiumName,
             HomeTeam = homeTeamName,
             Score = matchScore,
             VisitingTeam = visitingTeamName,
@@ -67,6 +69,11 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
     private string GetDepartureDateTime()
     {
         return _driver.FindElement(By.XPath("//div[@class='duelParticipant__startTime']")).Text;
+    }
+
+    private string GetStadiumName()
+    {
+        return _driver.FindElement(By.ClassName("matchInfoItem__value")).Text;
     }
 
     private string GetHomeTeamName()

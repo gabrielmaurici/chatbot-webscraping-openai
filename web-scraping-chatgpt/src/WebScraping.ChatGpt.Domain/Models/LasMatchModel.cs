@@ -9,7 +9,8 @@ public class LastMatchModel : MatchBaseModel
     {
         return $"🏆 *Campeonato {Tournament}*\n\n" +
                $"📆 *Data:* {Date.Replace(".", "/").Replace(" ", " - ")} hrs\n" +
-               $"🏟️ *Placar:* {HomeTeam} {Score.Replace("\n", "")} {VisitingTeam}\n\n" +
+               $"🏟️ *Estádio*: {Stadium}\n" +
+               $"🪧 *Placar:* {HomeTeam} {Score.Replace("\n", "")} {VisitingTeam}\n\n" +
                "📊 *Estatísticas*\n" +
                $"*Posse de bola* ⚽\n" +
                $"{HomeTeam} {Statistics.HomeBallPossession} - {Statistics.VisitingBallPossession} {VisitingTeam}\n\n" +

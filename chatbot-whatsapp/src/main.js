@@ -19,20 +19,41 @@ client.on('qr', (qr) => {
 });
 
 client.on('message_create', message => {
-    if (message.body === "Flu") {
+    if (message.body.toLowerCase() === "!ultima partida fluminense") {
         getLastMatch(message, "Fluminense");
     }
-    if (message.body === "Fla") {
+    if (message.body.toLowerCase() === "!ultima partida flamengo") {
         getLastMatch(message, "Flamengo");
     }
-    if (message.body === "Brusque") {
+    if (message.body.toLowerCase() === "!ultima partida brusque") {
         getLastMatch(message, "Brusque");
+    }    
+    
+    if (message.body.toLowerCase() === "!proxima partida fluminense") {
+        console.log("message create entrou")
+        getNextMatch(message, "Fluminense");
+    }
+    if (message.body.toLowerCase() === "!proxima partida flamengo") {
+        getNextMatch(message, "Flamengo");
+    }
+    if (message.body.toLowerCase() === "!proxima partida brusque") {
+        getNextMatch(message, "Brusque");
     }
 });
 
 async function getLastMatch(message, team) {
     try {
         let lastMatch = await webScrapingService.getLastMatch(team);
+        message.reply(lastMatch)
+        
+    } catch (error) {
+        message.reply("Ocorreu algum erro ao obter a última partida: " + error);
+    }
+}
+
+async function getNextMatch(message, team) {
+    try {
+        let lastMatch = await webScrapingService.getNextMatch(team);
         message.reply(lastMatch)
         
     } catch (error) {

@@ -6,6 +6,7 @@ package webScraping;
 
 service WebScraping {
   rpc GetLastMatch (LastMatchRequest) returns (LastMatchReply);
+  rpc GetNextMatch (NextMatchRequest) returns (NextMatchReply);
 }
 
 message LastMatchRequest {
@@ -14,4 +15,12 @@ message LastMatchRequest {
 
 message LastMatchReply {
   string lastMatch = 1;
+}
+
+message NextMatchRequest {
+  string team = 1;
+}
+
+message NextMatchReply {
+  string nextMatch = 1;
 }

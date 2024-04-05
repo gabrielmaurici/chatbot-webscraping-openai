@@ -1,4 +1,6 @@
-namespace WebScraping.ChatGpt.Infrastructure.Services;
+using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
+
+namespace WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.ConcretServices;
 
 public class FlamengoLastMatchService : WebScrapingLastMatchService
 {
