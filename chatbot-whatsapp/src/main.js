@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const botMenuService = require('./services/botMenuService');
 const webScrapingService = require('./grpc/services/webScrapingService');
 
 const client = new Client({
@@ -19,18 +20,18 @@ client.on('qr', (qr) => {
 });
 
 client.on('message_create', message => {
-    if (message.body.toLowerCase() === "!ultima partida fluminense") {
-        getLastMatch(message, "Fluminense");
-    }
-    if (message.body.toLowerCase() === "!ultima partida flamengo") {
-        getLastMatch(message, "Flamengo");
-    }
-    if (message.body.toLowerCase() === "!ultima partida brusque") {
-        getLastMatch(message, "Brusque");
-    }    
+    let botMenu = botMenuService.checkIfMessageRequestsBotMenu(message.body);
+    if(botMenu)
+        message.reply(botMenu);
+
     
+
+    CheckAndGetLastMatchIfMessageContainsLast(message);
+    CheckAndGetNextMatchIfMessageContainsNext(message);
+});
+
+function CheckAndGetNextMatchIfMessageContainsNext(message) {
     if (message.body.toLowerCase() === "!proxima partida fluminense") {
-        console.log("message create entrou")
         getNextMatch(message, "Fluminense");
     }
     if (message.body.toLowerCase() === "!proxima partida flamengo") {
@@ -39,7 +40,19 @@ client.on('message_create', message => {
     if (message.body.toLowerCase() === "!proxima partida brusque") {
         getNextMatch(message, "Brusque");
     }
-});
+}
+
+function CheckAndGetLastMatchIfMessageContainsLast(message) {
+    if (message.body.toLowerCase() === "!ultima partida fluminense") {
+        getLastMatch(message, "Fluminense");
+    }
+    if (message.body.toLowerCase() === "!ultima partida flamengo") {
+        getLastMatch(message, "Flamengo");
+    }
+    if (message.body.toLowerCase() === "!ultima partida brusque") {
+        getLastMatch(message, "Brusque");
+    }
+}
 
 async function getLastMatch(message, team) {
     try {
