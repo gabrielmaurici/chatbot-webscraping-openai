@@ -1,7 +1,8 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const botMenuService = require('./services/botMenuService');
-const webScrapingService = require('./grpc/services/webScrapingService');
+const lastMatchService = require('./services/lastMatchService');
+const nextMatchService = require('./services/nextMatchService');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -19,59 +20,21 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
 });
 
-client.on('message_create', message => {
-    let botMenu = botMenuService.checkIfMessageRequestsBotMenu(message.body);
-    if(botMenu)
-        message.reply(botMenu);
-
+client.on('message_create', async (message) => {
+    const botMenuMessage = botMenuService.checkIfMessageRequestsBotMenu(message.body);
+    if(botMenuMessage){
+        message.reply(botMenuMessage);
+    }
     
+    const lastMatchMessage = await lastMatchService.checkIfMessageRequestsLastMatch(message.body);
+    if(lastMatchMessage){
+        message.reply(lastMatchMessage);
+    }
 
-    CheckAndGetLastMatchIfMessageContainsLast(message);
-    CheckAndGetNextMatchIfMessageContainsNext(message);
+    const nextMatchMessage = await nextMatchService.checkIfMessageRequestsNextMatch(message.body);
+    if(nextMatchMessage){
+        message.reply(nextMatchMessage)
+    }
 });
-
-function CheckAndGetNextMatchIfMessageContainsNext(message) {
-    if (message.body.toLowerCase() === "!proxima partida fluminense") {
-        getNextMatch(message, "Fluminense");
-    }
-    if (message.body.toLowerCase() === "!proxima partida flamengo") {
-        getNextMatch(message, "Flamengo");
-    }
-    if (message.body.toLowerCase() === "!proxima partida brusque") {
-        getNextMatch(message, "Brusque");
-    }
-}
-
-function CheckAndGetLastMatchIfMessageContainsLast(message) {
-    if (message.body.toLowerCase() === "!ultima partida fluminense") {
-        getLastMatch(message, "Fluminense");
-    }
-    if (message.body.toLowerCase() === "!ultima partida flamengo") {
-        getLastMatch(message, "Flamengo");
-    }
-    if (message.body.toLowerCase() === "!ultima partida brusque") {
-        getLastMatch(message, "Brusque");
-    }
-}
-
-async function getLastMatch(message, team) {
-    try {
-        let lastMatch = await webScrapingService.getLastMatch(team);
-        message.reply(lastMatch)
-        
-    } catch (error) {
-        message.reply("Ocorreu algum erro ao obter a última partida: " + error);
-    }
-}
-
-async function getNextMatch(message, team) {
-    try {
-        let lastMatch = await webScrapingService.getNextMatch(team);
-        message.reply(lastMatch)
-        
-    } catch (error) {
-        message.reply("Ocorreu algum erro ao obter a última partida: " + error);
-    }
-}
 
 client.initialize();
