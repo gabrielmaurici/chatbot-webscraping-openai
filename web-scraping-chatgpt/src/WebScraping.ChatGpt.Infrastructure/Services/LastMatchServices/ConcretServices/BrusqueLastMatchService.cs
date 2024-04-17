@@ -1,6 +1,6 @@
 using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
 
-namespace WebScraping.ChatGpt.Infrastructure.Services.NextMatchServices.ConcretServices;
+namespace WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.ConcretServices;
 
 public class BrusqueLastMatchService : WebScrapingLastMatchService
 {

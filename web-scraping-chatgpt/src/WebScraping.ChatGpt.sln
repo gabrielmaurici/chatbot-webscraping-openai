@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Grpc", "WebScraping.ChatGpt.Grpc\WebScraping.ChatGpt.Grpc.csproj", "{42900241-1F6F-413C-A3F8-353A176CB4C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Application", "WebScraping.ChatGpt.Application\WebScraping.ChatGpt.Application.csproj", "{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Console", "WebScraping.ChatGpt.Console\WebScraping.ChatGpt.Console.csproj", "{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,5 +38,13 @@ Global
 		{42900241-1F6F-413C-A3F8-353A176CB4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42900241-1F6F-413C-A3F8-353A176CB4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42900241-1F6F-413C-A3F8-353A176CB4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

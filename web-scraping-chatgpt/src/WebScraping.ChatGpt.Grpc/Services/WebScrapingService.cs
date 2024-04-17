@@ -1,40 +1,28 @@
 using Grpc.Core;
-using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
-using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.ConcretServices;
-using WebScraping.ChatGpt.Infrastructure.Services.NextMatchServices.AbstractService;
-using WebScraping.ChatGpt.Infrastructure.Services.NextMatchServices.ConcretServices;
+using WebScraping.ChatGpt.Application.Interfaces;
 
 namespace WebScraping.ChatGpt.Grpc.Services;
 
-public class WebScrapingService : WebScraping.WebScrapingBase
+public class WebScrapingService(
+    ILastMatchApplication lastMatchApplication,
+    INextMatchApplication nextMatchApplication) : WebScraping.WebScrapingBase
 {
+    private readonly ILastMatchApplication _lastMatchApplication = lastMatchApplication;
+    private readonly INextMatchApplication _nextMatchApplication = nextMatchApplication;
+
     public override async Task<LastMatchReply> GetLastMatch(LastMatchRequest request, ServerCallContext context)
     {
-        WebScrapingLastMatchService webScrapingService = request.Team switch {
-            "Fluminense" => new FluminenseLastMatchService(),
-            "Flamengo" => new FlamengoLastMatchService(),
-            "Brusque" => new BrusqueLastMatchService(),
-            _ => throw new Exception("Nenhum time correspondente")
-        };
-
-        var response = await webScrapingService.ExecuteScraping();
+        var response = await _lastMatchApplication.Get(request.Team);
         return new LastMatchReply {
-            LastMatch = response.ToString()
+            LastMatch = response
         };
     }
 
     public override async Task<NextMatchReply> GetNextMatch(NextMatchRequest request, ServerCallContext context)
     {
-        WebScrapingNextMatchService webScrapingService = request.Team switch {
-            "Fluminense" => new FluminenseNextMatchService(),
-            "Flamengo" => new FlamengoNextMatchService(),
-            "Brusque" => new BrusqueNextMatchService(),
-            _ => throw new Exception("Nenhum time correspondente")
-        };
-
-        var response = await webScrapingService.ExecuteScraping();
+       var response = await _nextMatchApplication.Get(request.Team);
         return new NextMatchReply {
-            NextMatch = response.ToString()
+            NextMatch = response
         };
     }
 }

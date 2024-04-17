@@ -1,7 +1,12 @@
+using WebScraping.ChatGpt.Application.Interfaces;
+using WebScraping.ChatGpt.Application.Services;
 using WebScraping.ChatGpt.Grpc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ILastMatchApplication, LastMatchApplication>();
+builder.Services.AddScoped<INextMatchApplication, NextMatchApplication>();
 builder.Services.AddGrpc();
 
 var app = builder.Build();
