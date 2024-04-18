@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package chatGpt;
+
+service ChatGpt {
+  rpc AskQuestion (AskQuestionRequest) returns (AskQuestionReply);
+}
+
+message AskQuestionRequest {
+  string ask = 1;
+}
+
+message AskQuestionReply {
+  string responseIA = 1;
+}

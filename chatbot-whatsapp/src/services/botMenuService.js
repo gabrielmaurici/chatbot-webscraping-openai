@@ -9,10 +9,10 @@ function checkIfMessageRequestsBotMenu(message) {
         '!proxima partida fluminense\n' +
         '!proxima partida flamengo\n' +
         '!proxima partida brusque\n\n' +
-        '💬 *Para fazer alguma pergunta ao ChatGPT:*\n' +
-        '!chatgpt _sua pergunta aqui_';
+        '💬 *Para fazer alguma pergunta para a IA(ChatGPT):*\n' +
+        '!IA _sua pergunta aqui_';
     }
-    return null;
+    return undefined;
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
-const webScrapingService = require('../grpc/services/webScrapingService');
+const webScrapingGrpcService = require('../grpc/services/webScrapingGrpcService');
 
 async function checkIfMessageRequestsLastMatch(message) {
     try {
@@ -11,14 +11,14 @@ async function checkIfMessageRequestsLastMatch(message) {
         if (message.toLowerCase() === "!ultima partida brusque") {
             return getLastMatch("Brusque");
         }
-        return null;
+        return undefined;
     } catch(error){
         return error;
     }
 }
 
 async function getLastMatch(team) {
-    const client = await webScrapingService.getClientGrpc();
+    const client = await webScrapingGrpcService.getClientGrpc();
     return new Promise((resolve, reject) => {
       const request = {
         team: team 

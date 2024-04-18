@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\webScraping.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\chatGpt.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

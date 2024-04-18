@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Grpc", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Application", "WebScraping.ChatGpt.Application\WebScraping.ChatGpt.Application.csproj", "{FDA73C57-D1B3-4DE8-A4E6-5FF77AB3A027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraping.ChatGpt.Console", "WebScraping.ChatGpt.Console\WebScraping.ChatGpt.Console.csproj", "{8CD36176-35F2-4D7F-9D46-16CB6EA101F7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

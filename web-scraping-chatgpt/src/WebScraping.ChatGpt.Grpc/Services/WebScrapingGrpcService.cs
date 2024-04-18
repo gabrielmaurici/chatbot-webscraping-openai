@@ -3,7 +3,7 @@ using WebScraping.ChatGpt.Application.Interfaces;
 
 namespace WebScraping.ChatGpt.Grpc.Services;
 
-public class WebScrapingService(
+public class WebScrapingGrpcService(
     ILastMatchApplication lastMatchApplication,
     INextMatchApplication nextMatchApplication) : WebScraping.WebScrapingBase
 {

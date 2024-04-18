@@ -3,6 +3,7 @@ const qrcode = require('qrcode-terminal');
 const botMenuService = require('./services/botMenuService');
 const lastMatchService = require('./services/lastMatchService');
 const nextMatchService = require('./services/nextMatchService');
+const chatGptService = require('./services/chatGptService');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -34,6 +35,11 @@ client.on('message_create', async (message) => {
     const nextMatchMessage = await nextMatchService.checkIfMessageRequestsNextMatch(message.body);
     if(nextMatchMessage){
         message.reply(nextMatchMessage)
+    }
+
+    const askQuestionIAMessage = await chatGptService.checkIfMessageRequestsAskQuestionsIA(message.body);
+    if(askQuestionIAMessage){
+        message.reply(askQuestionIAMessage)
     }
 });
 

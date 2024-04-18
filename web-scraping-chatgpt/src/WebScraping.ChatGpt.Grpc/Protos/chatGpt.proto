@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "WebScraping.ChatGpt.Grpc";
+
+package chatGpt;
+
+service ChatGpt {
+  rpc AskQuestion (AskQuestionRequest) returns (AskQuestionReply);
+}
+
+message AskQuestionRequest {
+  string ask = 1;
+}
+
+message AskQuestionReply {
+  string responseIA = 1;
+}
