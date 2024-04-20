@@ -1,11 +1,11 @@
 using Grpc.Core;
-using WebScraping.ChatGpt.Application.Interfaces;
+using WebScraping.ChatGpt.Application.Interfaces.OpenAI;
 
 namespace WebScraping.ChatGpt.Grpc.Services;
 
-public class ChatGptGrpcService(IChatGptApplication chatGptApplication) : ChatGpt.ChatGptBase
+public class ChatGptGrpcService(IChatGptApllication chatGptApplication) : ChatGpt.ChatGptBase
 {
-    private readonly IChatGptApplication _chatGptApplication = chatGptApplication;
+    private readonly IChatGptApllication _chatGptApplication = chatGptApplication;
 
     public override async Task<AskQuestionReply> AskQuestion(AskQuestionRequest request, ServerCallContext context)
     {

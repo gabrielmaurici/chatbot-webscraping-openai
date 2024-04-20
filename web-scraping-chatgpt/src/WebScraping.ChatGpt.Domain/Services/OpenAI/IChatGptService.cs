@@ -1,4 +1,4 @@
-namespace WebScraping.ChatGpt.Domain.Services;
+namespace WebScraping.ChatGpt.Domain.Services.OpenAI;
 
 public interface IChatGptService
 {

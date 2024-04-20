@@ -1,6 +1,6 @@
-using WebScraping.ChatGpt.Domain.Models;
+using WebScraping.ChatGpt.Domain.Models.WebScraping;
 
-namespace WebScraping.ChatGpt.Domain.Services;
+namespace WebScraping.ChatGpt.Domain.Services.WebScraping;
 
 public interface IWebScrapingService<TResponse> where TResponse : MatchBaseModel 
 {

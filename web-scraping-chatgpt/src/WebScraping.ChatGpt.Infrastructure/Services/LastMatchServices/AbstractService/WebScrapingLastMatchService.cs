@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using WebScraping.ChatGpt.Domain.Models;
-using WebScraping.ChatGpt.Domain.Services;
+using WebScraping.ChatGpt.Domain.Models.WebScraping;
+using WebScraping.ChatGpt.Domain.Services.WebScraping;
 
 namespace WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
 

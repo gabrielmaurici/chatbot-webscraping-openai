@@ -1,4 +1,4 @@
-﻿namespace WebScraping.ChatGpt.Domain.Models;
+﻿namespace WebScraping.ChatGpt.Domain.Models.WebScraping;
 
 public class LastMatchModel : MatchBaseModel
 {

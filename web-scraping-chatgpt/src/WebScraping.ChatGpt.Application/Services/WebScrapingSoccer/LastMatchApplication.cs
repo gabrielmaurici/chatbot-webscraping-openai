@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Caching.Memory;
-using WebScraping.ChatGpt.Application.Interfaces;
-using WebScraping.ChatGpt.Domain.Models;
+using WebScraping.ChatGpt.Application.Interfaces.WebScrapingSoccer;
+using WebScraping.ChatGpt.Domain.Models.WebScraping;
 using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.AbstractService;
 using WebScraping.ChatGpt.Infrastructure.Services.LastMatchServices.ConcretServices;
 
-namespace WebScraping.ChatGpt.Application.Services;
+namespace WebScraping.ChatGpt.Application.Services.WebScrapingSoccer;
 
 public class LastMatchApplication(IMemoryCache memoryCache) : ILastMatchApplication
 {

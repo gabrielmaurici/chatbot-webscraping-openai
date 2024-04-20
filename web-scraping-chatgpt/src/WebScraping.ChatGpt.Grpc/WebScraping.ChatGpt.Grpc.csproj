@@ -12,11 +12,13 @@
 
     <ItemGroup>
     <ProjectReference Include="..\WebScraping.ChatGpt.Application\WebScraping.ChatGpt.Application.csproj" />
+    <ProjectReference Include="..\WebScraping.ChatGpt.IoC\WebScraping.ChatGpt.IoC.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Protobuf Include="Protos\webScraping.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\chatGpt.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\imageDalle.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

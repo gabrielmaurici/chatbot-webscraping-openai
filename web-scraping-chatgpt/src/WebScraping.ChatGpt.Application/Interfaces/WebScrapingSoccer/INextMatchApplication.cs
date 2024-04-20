@@ -1,4 +1,4 @@
-namespace WebScraping.ChatGpt.Application.Interfaces;
+namespace WebScraping.ChatGpt.Application.Interfaces.WebScrapingSoccer;
 
 public interface INextMatchApplication
 {

@@ -1,9 +1,9 @@
-using WebScraping.ChatGpt.Application.Interfaces;
-using WebScraping.ChatGpt.Domain.Services;
+using WebScraping.ChatGpt.Application.Interfaces.OpenAI;
+using WebScraping.ChatGpt.Domain.Services.OpenAI;
 
-namespace WebScraping.ChatGpt.Application.Services;
+namespace WebScraping.ChatGpt.Application.Services.OpenAI;
 
-public class ChatGptApplication(IChatGptService chatGptService) : IChatGptApplication
+public class ChatGptApplication(IChatGptService chatGptService) : IChatGptApllication
 {
     private readonly IChatGptService _chatGptService = chatGptService;
 
@@ -11,7 +11,7 @@ public class ChatGptApplication(IChatGptService chatGptService) : IChatGptApplic
     {
         Validate(ask);
 
-        if (ask.StartsWith("!IA "))
+        if (ask.StartsWith("!IA-chat"))
             ask = ReturnQuestionOnly(ask);
 
         return await _chatGptService.AskQuestion(ask, null);
@@ -25,7 +25,7 @@ public class ChatGptApplication(IChatGptService chatGptService) : IChatGptApplic
 
     private static string ReturnQuestionOnly(string ask)
     {
-        ask = ask[3..];
+        ask = ask[9..];
         return ask;
     }
 }

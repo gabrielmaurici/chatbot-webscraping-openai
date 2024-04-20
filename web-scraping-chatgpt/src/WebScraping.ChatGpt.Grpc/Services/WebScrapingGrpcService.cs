@@ -1,5 +1,5 @@
 using Grpc.Core;
-using WebScraping.ChatGpt.Application.Interfaces;
+using WebScraping.ChatGpt.Application.Interfaces.WebScrapingSoccer;
 
 namespace WebScraping.ChatGpt.Grpc.Services;
 

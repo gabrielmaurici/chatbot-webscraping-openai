@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "WebScraping.ChatGpt.Grpc";
+
+package imageDalle;
+
+service  ImageDalle {
+  rpc GenerateImage (GenerateImageRequest) returns (GenerateImageReply);
+}
+
+message GenerateImageRequest {
+  string imageDescription = 1;
+}
+
+message GenerateImageReply {
+  string revised_prompt = 1;
+  string base64 = 2;
+}

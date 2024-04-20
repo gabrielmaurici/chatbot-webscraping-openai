@@ -1,18 +1,11 @@
-using WebScraping.ChatGpt.Application.Interfaces;
-using WebScraping.ChatGpt.Application.Services;
-using WebScraping.ChatGpt.Domain.Services;
 using WebScraping.ChatGpt.Grpc.Services;
-using WebScraping.ChatGpt.Infrastructure.Services;
+using WebScraping.ChatGpt.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var teste = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-Console.WriteLine("Teste " + teste);
+builder.Services.AddDomainDependeces(builder.Configuration);
+builder.Services.AddApllicationDependeces();
 builder.Services.AddMemoryCache();
-builder.Services.AddScoped<IChatGptService, ChatGptService>();
-builder.Services.AddScoped<IChatGptApplication, ChatGptApplication>();
-builder.Services.AddScoped<ILastMatchApplication, LastMatchApplication>();
-builder.Services.AddScoped<INextMatchApplication, NextMatchApplication>();
 builder.Services.AddGrpc();
 
 var app = builder.Build();
