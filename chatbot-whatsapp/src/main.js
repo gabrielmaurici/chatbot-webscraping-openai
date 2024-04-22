@@ -1,9 +1,10 @@
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const botMenuService = require('./services/botMenuService');
 const lastMatchService = require('./services/lastMatchService');
 const nextMatchService = require('./services/nextMatchService');
 const chatGptService = require('./services/chatGptService');
+const aiImageGenerateService = require('./services/aiImageGenerateService');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -40,6 +41,12 @@ client.on('message_create', async (message) => {
     const askQuestionIAMessage = await chatGptService.checkIfMessageRequestsAskQuestionsIA(message.body);
     if(askQuestionIAMessage){
         message.reply(askQuestionIAMessage)
+    }
+
+    const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body);
+    if(aiImageGenerateMessage){
+        const media = new MessageMedia('image/png', aiImageGenerateMessage.base64);
+        await client.sendMessage(message.from, media, { caption: aiImageGenerateMessage.revisedPrompt });
     }
 });
 

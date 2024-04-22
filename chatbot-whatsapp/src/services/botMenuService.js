@@ -10,7 +10,9 @@ function checkIfMessageRequestsBotMenu(message) {
         '!proxima partida flamengo\n' +
         '!proxima partida brusque\n\n' +
         '💬 *Para fazer alguma pergunta para a IA(ChatGPT):*\n' +
-        '!IA _sua pergunta aqui_';
+        '!IA _sua pergunta aqui_\n\n' +
+        '🏞️ *Parar gerar uma imagem com IA(Dall-e):*\n'+
+        '!IA-imagem _descrição da imagem que deseja gerar aqui_';
     }
     return undefined;
 };

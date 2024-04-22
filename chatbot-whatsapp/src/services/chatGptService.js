@@ -2,7 +2,7 @@ const chatGptGrpcService = require('../grpc/services/chatGptGrpcService');
 
 function checkIfMessageRequestsAskQuestionsIA(message) {
     try {
-      if (message.startsWith("!IA")) {
+      if (message.startsWith("!IA-chat")) {
         return AskQuestionsIA(message);
       }
       return undefined;
