@@ -11,8 +11,7 @@ public class ImageDalleGrpcService(IImagemDalleApplication imageDalleApplication
     {
         var response = await _imageDalleApplication.GenerateImage(request.ImageDescription);
         return new GenerateImageReply {
-            RevisedPrompt = response.Revised_prompt,
-            Base64 = response.B64_json
+            Url = response
         };
     }
 }

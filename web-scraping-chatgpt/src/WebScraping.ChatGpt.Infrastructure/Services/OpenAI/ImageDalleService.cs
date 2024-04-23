@@ -1,5 +1,4 @@
-using Newtonsoft.Json;
-using WebScraping.ChatGpt.Domain.Models.OpenAI;
+using Newtonsoft.Json.Linq;
 using WebScraping.ChatGpt.Domain.Services.OpenAI;
 
 namespace WebScraping.ChatGpt.Infrastructure.Services.OpenAI;
@@ -9,7 +8,7 @@ public class ImageDalleService(IOpenAIApiService openAIApiService) : IImageDalle
     private readonly IOpenAIApiService _openAIApiService = openAIApiService;
     private const string RESOURCE_IMAGES_GENERATIONS = "v1/images/generations";
 
-    public async Task<ImageDalleModel> GenerateImage(string imageDescription)
+    public async Task<string> GenerateImage(string imageDescription)
     {
         var content = CreateContentRequest(imageDescription);
         var request = await _openAIApiService.CreateRequest(
@@ -21,9 +20,9 @@ public class ImageDalleService(IOpenAIApiService openAIApiService) : IImageDalle
         var responseContent = await response.Content.ReadAsStringAsync();
         if(!response.IsSuccessStatusCode)
             throw new Exception("Erro ao gerar imagem com a IA DAll-e" + responseContent);
-        
-        var imageModel = DeserializeResponse(responseContent);
-        return imageModel;
+      
+        var imageUrl = DeserializeResponse(responseContent);
+        return imageUrl;
     }
 
     private static object CreateContentRequest(string imageDescription)
@@ -34,14 +33,16 @@ public class ImageDalleService(IOpenAIApiService openAIApiService) : IImageDalle
             prompt = imageDescription,
             n = 1,
             size = "1024x1024",
-            response_format = "b64_json",
             style = "natural"
         };
     }
 
-    private static ImageDalleModel DeserializeResponse(string responseContent)
+    private static string DeserializeResponse(string responseContent)
     {
-        var imageModel = JsonConvert.DeserializeObject<ImageDalleModel>(responseContent)!;
-        return imageModel;
+        var jsonResponse = JObject.Parse(responseContent)!;
+        var imageUrl = jsonResponse["data"]!
+            .Select(data => data["url"]!)
+            .First()!;
+        return imageUrl.ToString();
     }
 }

@@ -13,6 +13,5 @@ message GenerateImageRequest {
 }
 
 message GenerateImageReply {
-  string revised_prompt = 1;
-  string base64 = 2;
+  string url = 2;
 }

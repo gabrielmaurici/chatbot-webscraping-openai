@@ -1,5 +1,4 @@
 using WebScraping.ChatGpt.Application.Interfaces.OpenAI;
-using WebScraping.ChatGpt.Domain.Models.OpenAI;
 using WebScraping.ChatGpt.Domain.Services.OpenAI;
 
 namespace WebScraping.ChatGpt.Application.Services.OpenAI;
@@ -8,7 +7,7 @@ public class ImageDalleApplication(IImageDalleService imageDalleService) : IImag
 {
     private readonly IImageDalleService _imageDalleService = imageDalleService;
 
-    public async Task<ImageDalleModel> GenerateImage(string imageDescription)
+    public async Task<string> GenerateImage(string imageDescription)
     {
         Validate(imageDescription);
 
