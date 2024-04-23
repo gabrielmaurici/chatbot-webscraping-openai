@@ -2,7 +2,6 @@ require('dotenv').config();
 const imageDalleGrpcService = require('../grpc/services/imageDalleGrpcService');
 
 async function generacheckIfMessageRequestsAIImageGenerate(message, numberPhone) {
-    console.log("meu numero " +process.env.NUMBER_PHONE);
     if (message.startsWith("!IA-imagem") && numberPhone === process.env.NUMBER_PHONE) {
       var aiImage = await GenerateImageAI(message);
       return { authorized: true, url: aiImage };
