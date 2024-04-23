@@ -43,10 +43,18 @@ client.on('message_create', async (message) => {
         message.reply(askQuestionIAMessage)
     }
 
-    const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body);
+    const contact = await message.getContact();
+    const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body, contact.number);
     if(aiImageGenerateMessage){
-        const media = new MessageMedia('image/png', aiImageGenerateMessage.base64);
-        await client.sendMessage(message.from, media, { caption: aiImageGenerateMessage.revisedPrompt });
+        if(!aiImageGenerateMessage.authorized) {
+            message.reply("Você não tem autorização para gerar imagens");
+            return;
+        }
+        const optionsMedia = {
+            unsafeMime: true
+        }
+        const media = await MessageMedia.fromUrl(aiImageGenerateMessage.url, optionsMedia);
+        await message.reply(media);
     }
 });
 
