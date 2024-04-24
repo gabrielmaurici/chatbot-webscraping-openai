@@ -1,4 +1,3 @@
-
 namespace WebScraping.OpenAI.Domain.Services.OpenAI;
 
 public interface IImageDalleService
