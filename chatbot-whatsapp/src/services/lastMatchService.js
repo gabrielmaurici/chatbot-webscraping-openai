@@ -3,13 +3,13 @@ const webScrapingGrpcService = require('../grpc/services/webScrapingGrpcService'
 async function checkIfMessageRequestsLastMatch(message) {
     try {
         if (message.toLowerCase() === "!ultima partida fluminense") {
-            return getLastMatch("Fluminense");
+            return await getLastMatch("Fluminense");
         }
         if (message.toLowerCase() === "!ultima partida flamengo") {
-            return getLastMatch("Flamengo");
+            return await getLastMatch("Flamengo");
         }
         if (message.toLowerCase() === "!ultima partida brusque") {
-            return getLastMatch("Brusque");
+            return await getLastMatch("Brusque");
         }
         return undefined;
     } catch(error){
@@ -26,6 +26,7 @@ async function getLastMatch(team) {
       client.GetLastMatch(request, (error, response) => {
         if (error) {
             reject("Ocorreu algum erro ao obter a última partida: " + error);
+            return;
         }
         resolve(response.lastMatch);
       });

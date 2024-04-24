@@ -1,9 +1,10 @@
+const { error } = require('qrcode-terminal');
 const chatGptGrpcService = require('../grpc/services/chatGptGrpcService');
 
-function checkIfMessageRequestsAskQuestionsIA(message) {
+async function checkIfMessageRequestsAskQuestionsIA(message) {
     try {
       if (message.startsWith("!IA-chat")) {
-        return AskQuestionsIA(message);
+        return await AskQuestionsIA(message);
       }
       return undefined;
     } catch (error) {
@@ -14,16 +15,16 @@ function checkIfMessageRequestsAskQuestionsIA(message) {
 async function AskQuestionsIA(ask) {
     const client = await chatGptGrpcService.getClientGrpc();
     return new Promise((resolve, reject) => {
-      const request = {
-        ask: ask 
-      };
+      const request = { ask: ask };
       client.AskQuestion(request, (error, response) => {
         if (error) {
-          reject("Ocorreu algum erro ao tentar falar com a IA: " + error);
+          reject("Ocorreu algum erro ao realizar a pergunta para a IA: " + error);
+          return;
         }
         resolve(response.responseIA);
       });
-    });
+    })
+    
 }
 
 module.exports = {

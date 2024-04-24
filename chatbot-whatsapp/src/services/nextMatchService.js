@@ -1,15 +1,15 @@
 const webScrapingGrpcService = require('../grpc/services/webScrapingGrpcService');
 
-function checkIfMessageRequestsNextMatch(message) {
+async function checkIfMessageRequestsNextMatch(message) {
     try {
       if (message.toLowerCase() === "!proxima partida fluminense") {
-        return getNextMatch("Fluminense");
+        return await getNextMatch("Fluminense");
       }
       if (message.toLowerCase() === "!proxima partida flamengo") {
-        return getNextMatch("Flamengo");
+        return await getNextMatch("Flamengo");
       }
       if (message.toLowerCase() === "!proxima partida brusque") {
-        return getNextMatch("Brusque");
+        return await getNextMatch("Brusque");
       }
   
       return undefined;
@@ -27,6 +27,7 @@ async function getNextMatch(team) {
       client.GetNextMatch(request, (error, response) => {
         if (error) {
           reject("Ocorreu algum erro ao tentar obter a próxima partida: " + error);
+          return;
         }
         resolve(response.nextMatch);
       });

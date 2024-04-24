@@ -2,15 +2,19 @@ require('dotenv').config();
 const imageDalleGrpcService = require('../grpc/services/imageDalleGrpcService');
 
 async function generacheckIfMessageRequestsAIImageGenerate(message, numberPhone) {
+  try{
     if (message.startsWith("!IA-imagem") && numberPhone === process.env.NUMBER_PHONE) {
       var aiImage = await GenerateImageAI(message);
-      return { authorized: true, url: aiImage };
+      return { succes: true, url: aiImage };
     }
     if(message.startsWith("!IA-imagem")) {
-      return { authorized: false };
+      return { succes: false, message: "Você não tem autorização para gerar imagens" };
     }
 
     return null;
+  } catch (error){
+    return { succes: false, message: error };
+  }
 }
 
 async function GenerateImageAI(imageDescription) {
@@ -22,6 +26,7 @@ async function GenerateImageAI(imageDescription) {
     client.GenerateImage(request, (error, response) => {
       if (error) {
         reject("Ocorreu algum erro ao tentar gerar imagem com a IA: " + error);
+        return;
       }
       resolve(response.url);
     });

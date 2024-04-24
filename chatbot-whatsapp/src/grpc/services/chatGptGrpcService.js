@@ -4,7 +4,7 @@ const protoLoader = require('@grpc/proto-loader');
 
 async function getClientGrpc() {
   try {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const protoFilePath = path.join(__dirname, '../protos/chatGpt.proto');
       const packageDefinition = protoLoader.loadSync(protoFilePath);
       const chatGptProto = grpc.loadPackageDefinition(packageDefinition).chatGpt;

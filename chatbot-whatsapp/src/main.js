@@ -46,10 +46,11 @@ client.on('message_create', async (message) => {
     const contact = await message.getContact();
     const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body, contact.number);
     if(aiImageGenerateMessage){
-        if(!aiImageGenerateMessage.authorized) {
-            message.reply("Você não tem autorização para gerar imagens");
+        if(!aiImageGenerateMessage.succes){
+            message.reply(aiImageGenerateMessage.message)
             return;
         }
+
         const optionsMedia = {
             unsafeMime: true
         }
