@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "WebScraping.OpenAI.Grpc";
+
+package imageDalle;
+
+service  ImageDalle {
+  rpc GenerateImage (GenerateImageRequest) returns (GenerateImageReply);
+}
+
+message GenerateImageRequest {
+  string imageDescription = 1;
+}
+
+message GenerateImageReply {
+  string url = 2;
+}
