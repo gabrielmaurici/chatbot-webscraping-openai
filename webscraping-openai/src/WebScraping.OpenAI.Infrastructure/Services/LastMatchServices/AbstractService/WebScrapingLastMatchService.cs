@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Security.Cryptography;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebScraping.OpenAI.Domain.Models.WebScraping;
 using WebScraping.OpenAI.Domain.Services.WebScraping;
@@ -45,7 +46,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
     private void GoToUrlOfLatestMatch()
     {
         _driver.Navigate().GoToUrl(_teamResultsUrl);
-        Thread.Sleep(1000);
+        Thread.Sleep(800);
     }
 
     private void ClickAcceptCookies()
@@ -58,7 +59,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
     {
         var resultado = _driver.FindElement(By.ClassName("event__match"));
         resultado.Click();
-        Thread.Sleep(1000);
+        Thread.Sleep(800);
     }
 
     private string GetTournamentName()
@@ -97,25 +98,36 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
 
     private StatisticsModel GetStatistics()
     {
+        var buttonStatistics = _driver.FindElements(By.ClassName("_tabsSecondary_1b0gr_48"));
+        foreach(var button in buttonStatistics) 
+        {
+            var buttonName = button.Text.Replace("\n", " ").ToUpper();
+            if(buttonName.Contains("ESTATÍSTICAS"))
+            {
+                button.Click();
+            }
+        }
+        Thread.Sleep(500);
+
         var statistics = new StatisticsModel();
         var statisticsElement = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
         foreach (var statistic in statisticsElement)
         {
-            var statisticName = statistic.Text.Replace("\n", " ");
-            if (statisticName.Contains("Posse de bola"))
+            var statisticName = statistic.Text.Replace("\n", " ").ToUpper();
+            if (statisticName.Contains("POSSE DE BOLA"))
             {
                 statistics.HomeBallPossession = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
                 statistics.VisitingBallPossession = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
-            if (statisticName.Contains("Tentativas de gol"))
+            if (statisticName.Contains("TENTATIVAS DE GOL"))
             {
                 statistics.HomeGoalAttempts = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
                 statistics.VisitingGoalAttempts = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
-            if (statisticName.Contains("Finalizações"))
+            if (statisticName.Contains("CHUTES NO GOL"))
             {
-                statistics.HomeFinishes = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                statistics.VisitingFinishes = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+                statistics.HomeShotsOnGoal = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                statistics.VisitingShotsOnGoal = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
             }
         }
 
@@ -126,6 +138,10 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
     {
         try 
         {
+            var sumaryButton = _driver.FindElement(By.XPath("//*[@id='detail']/div[7]/div/a[1]/button"));
+            sumaryButton.Click();
+            Thread.Sleep(500);
+
             var bestMomentsElement = _driver.FindElement(By.ClassName("matchReportBoxes"));
             bestMomentsElement.Click();
 

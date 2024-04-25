@@ -16,8 +16,8 @@ public class LastMatchModel : MatchBaseModel
                $"{HomeTeam} {Statistics.HomeBallPossession} - {Statistics.VisitingBallPossession} {VisitingTeam}\n\n" +
                $"*Tentativas de gol* 🥅\n" +
                $"{HomeTeam} {Statistics.HomeGoalAttempts} - {Statistics.VisitingGoalAttempts} {VisitingTeam}\n\n" +
-               $"*Finalizações* ✅\n" +
-               $"{HomeTeam} {Statistics.HomeFinishes} - {Statistics.VisitingFinishes} {VisitingTeam}\n\n" +
+               $"*Chutes no gol* ✅\n" +
+               $"{HomeTeam} {Statistics.HomeShotsOnGoal} - {Statistics.VisitingShotsOnGoal} {VisitingTeam}\n\n" +
                $"🎥 Assita aos melhores momentos: {UrlBestMoments}";
     }
 }

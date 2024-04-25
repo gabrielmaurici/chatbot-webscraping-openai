@@ -6,7 +6,6 @@ public class StatisticsModel
     public string VisitingBallPossession { get; set; } = null!;
     public string HomeGoalAttempts { get; set; } = null!;
     public string VisitingGoalAttempts { get; set; } = null!;
-    public string HomeFinishes { get; set; } = null!;
-    public string VisitingFinishes { get; set; } = null!;
-
+    public string HomeShotsOnGoal { get; set; } = null!;
+    public string VisitingShotsOnGoal { get; set; } = null!;
 }
