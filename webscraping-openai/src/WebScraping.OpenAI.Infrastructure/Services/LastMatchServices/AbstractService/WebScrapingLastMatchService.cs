@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebScraping.OpenAI.Domain.Models.WebScraping;
 using WebScraping.OpenAI.Domain.Services.WebScraping;
