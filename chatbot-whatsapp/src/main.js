@@ -43,8 +43,7 @@ client.on('message_create', async (message) => {
         message.reply(askQuestionIAMessage)
     }
 
-    const contact = await message.getContact();
-    const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body, contact.number);
+    const aiImageGenerateMessage = await aiImageGenerateService.generacheckIfMessageRequestsAIImageGenerate(message.body);
     if(aiImageGenerateMessage){
         if(!aiImageGenerateMessage.succes){
             message.reply(aiImageGenerateMessage.message)
