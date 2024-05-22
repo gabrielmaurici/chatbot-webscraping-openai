@@ -5,10 +5,22 @@ using WebScraping.OpenAI.Domain.Services.WebScraping;
 
 namespace WebScraping.OpenAI.Infrastructure.Services.LastMatchServices.AbstractService;
 
-public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebScrapingService<LastMatchModel>
+public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatchModel>
 {
-    private readonly ChromeDriver _driver = new();
-    private readonly string _teamResultsUrl = teamResultsUrl;
+    private readonly ChromeDriver _driver;
+    private readonly string _teamResultsUrl;
+
+    public WebScrapingLastMatchService(string teamResultsUrl)
+    {
+        ChromeOptions options = new();
+        options.AddArgument("--headless");
+        options.AddArgument("--window-size=1400,600");
+        options.AddArguments("--disable-dev-shm-usage");
+
+        _driver = new ChromeDriver(options);
+        _teamResultsUrl = teamResultsUrl;
+    }
+
 
     public Task<LastMatchModel> ExecuteScraping()
     {
@@ -45,7 +57,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
     private void GoToUrlOfLatestMatch()
     {
         _driver.Navigate().GoToUrl(_teamResultsUrl);
-        Thread.Sleep(800);
+        Thread.Sleep(300);
     }
 
     private void ClickAcceptCookies()
@@ -112,6 +124,7 @@ public abstract class WebScrapingLastMatchService(string teamResultsUrl) : IWebS
         var statisticsElement = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
         foreach (var statistic in statisticsElement)
         {
+            Console.WriteLine("estatistic " + statistic.Text);
             var statisticName = statistic.Text.Replace("\n", " ").ToUpper();
             if (statisticName.Contains("POSSE DE BOLA"))
             {

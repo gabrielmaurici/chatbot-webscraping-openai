@@ -8,7 +8,7 @@ async function getClientGrpc() {
       const protoFilePath = path.join(__dirname, '../protos/imageDalle.proto');
       const packageDefinition = protoLoader.loadSync(protoFilePath);
       const imageDalleProto = grpc.loadPackageDefinition(packageDefinition).imageDalle;
-      const client = new imageDalleProto.ImageDalle('localhost:5100', grpc.credentials.createInsecure());
+      const client = new imageDalleProto.ImageDalle('webscraping-openai:5001', grpc.credentials.createInsecure());
       resolve(client);
     });
   } catch (error) {

@@ -8,7 +8,7 @@ async function getClientGrpc() {
       const protoFilePath = path.join(__dirname, '../protos/webScraping.proto');
       const packageDefinition = protoLoader.loadSync(protoFilePath);
       const webScrapingProto = grpc.loadPackageDefinition(packageDefinition).webScraping;
-      const client = new webScrapingProto.WebScraping('localhost:5100', grpc.credentials.createInsecure());
+      const client = new webScrapingProto.WebScraping('webscraping-openai:5001', grpc.credentials.createInsecure());
       resolve(client);
     });
   } catch (error) {

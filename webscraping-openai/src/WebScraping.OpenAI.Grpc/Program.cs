@@ -1,7 +1,18 @@
+using System.Net;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebScraping.OpenAI.Grpc.Services;
 using WebScraping.OpenAI.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 5001, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http2;
+    });
+});
 
 builder.Services.AddDomainDependeces(builder.Configuration);
 builder.Services.AddApllicationDependeces();
@@ -13,7 +24,5 @@ var app = builder.Build();
 app.MapGrpcService<WebScrapingGrpcService>();
 app.MapGrpcService<ChatGptGrpcService>();
 app.MapGrpcService<ImageDalleGrpcService>();
-
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();

@@ -5,10 +5,21 @@ using WebScraping.OpenAI.Domain.Services.WebScraping;
 
 namespace WebScraping.OpenAI.Infrastructure.Services.NextMatchServices.AbstractService;
 
-public abstract class WebScrapingNextMatchService(string urlTeamNextMatch) : IWebScrapingService<NextMatchModel>
+public abstract class WebScrapingNextMatchService : IWebScrapingService<NextMatchModel>
 {
-    private readonly ChromeDriver _driver = new();
-    private readonly string _urlTeamNextMatch = urlTeamNextMatch;
+    private readonly ChromeDriver _driver;
+    private readonly string _urlTeamNextMatch;
+
+    public WebScrapingNextMatchService(string urlTeamNextMatch)
+    {
+        ChromeOptions options = new();
+        options.AddArgument("--headless");
+        options.AddArgument("--window-size=1400,600");
+        options.AddArguments("--disable-dev-shm-usage");
+
+        _driver = new ChromeDriver(options);
+        _urlTeamNextMatch = urlTeamNextMatch;
+    }
 
     public Task<NextMatchModel> ExecuteScraping()
     {
@@ -39,7 +50,7 @@ public abstract class WebScrapingNextMatchService(string urlTeamNextMatch) : IWe
     private void GoToUrlOfNextMatch()
     {
         _driver.Navigate().GoToUrl(_urlTeamNextMatch);
-        Thread.Sleep(1000);
+        Thread.Sleep(300);
     }
 
     private void ClickAcceptCookies()

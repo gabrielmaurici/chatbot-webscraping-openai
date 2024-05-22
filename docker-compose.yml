@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  webscraping-openai:
+    build:
+      context: ./webscraping-openai
+    container_name: webscraping-openai
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - chatbot-webscraping-openai
+    ports:
+      - "5001:5001"
+
+  chatbot:
+    build:
+      context: ./chatbot-whatsapp/src
+    container_name: chatbot
+    networks:
+      - chatbot-webscraping-openai
+    ports:
+      - "3000:3000"
+    depends_on:
+      - webscraping-openai
+
+networks:
+  chatbot-webscraping-openai:
+    driver: bridge

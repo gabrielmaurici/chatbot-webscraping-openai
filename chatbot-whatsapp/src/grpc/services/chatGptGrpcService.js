@@ -8,7 +8,7 @@ async function getClientGrpc() {
       const protoFilePath = path.join(__dirname, '../protos/chatGpt.proto');
       const packageDefinition = protoLoader.loadSync(protoFilePath);
       const chatGptProto = grpc.loadPackageDefinition(packageDefinition).chatGpt;
-      const client = new chatGptProto.ChatGpt('localhost:5100', grpc.credentials.createInsecure());
+      const client = new chatGptProto.ChatGpt('webscraping-openai:5001', grpc.credentials.createInsecure());
       resolve(client);
     });
   } catch (error) {
