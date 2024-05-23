@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: webscraping-openai
+    runtime: docker
+    dockerfilePath: ./webscraping-openai/Dockerfile
+    plan: free
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+        
+  - type: web
+    name: chatbot-whatsapp
+    runtime: docker
+    dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
+    plan: free
