@@ -14,8 +14,6 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 });
 
-Console.WriteLine("teste: " + builder.Configuration.GetValue<string>("OPENAI_API_KEY"));
-
 builder.Services.AddDomainDependeces(builder.Configuration);
 builder.Services.AddApllicationDependeces();
 builder.Services.AddMemoryCache();

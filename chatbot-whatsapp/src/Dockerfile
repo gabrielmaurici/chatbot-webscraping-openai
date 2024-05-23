@@ -1,5 +1,6 @@
 FROM node:alpine
 
+USER root
 RUN apk update && \
     apk upgrade && \
     apk add --update ca-certificates && \
