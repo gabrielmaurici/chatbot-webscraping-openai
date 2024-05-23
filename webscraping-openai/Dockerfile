@@ -8,7 +8,7 @@ COPY /src/WebScraping.OpenAI.Domain/*.csproj ./WebScraping.OpenAI.Domain/
 COPY /src/WebScraping.OpenAI.Infrastructure/*.csproj ./WebScraping.OpenAI.Infrastructure/
 COPY /src/WebScraping.OpenAI.IoC/*.csproj ./WebScraping.OpenAI.IoC/
 COPY /src/WebScraping.OpenAI.Grpc/Protos/*.proto ./WebScraping.OpenAI.Grpc/Protos/
-COPY /src/WebScraping.OpenAI.Grpc/appsettings.json ./WebScraping.OpenAI.Grpc/
+COPY /src/WebScraping.OpenAI.Grpc/*.json ./WebScraping.OpenAI.Grpc/
 RUN dotnet restore
 
 WORKDIR /src/WebScraping.OpenAI.Grpc/
