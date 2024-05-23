@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# COPY /src/WebScraping.OpenAI.sln .
+COPY /src/WebScraping.OpenAI.sln .
 COPY /src/WebScraping.OpenAI.Grpc/*.csproj ./WebScraping.OpenAI.Grpc/
 COPY /src/WebScraping.OpenAI.Application/*.csproj ./WebScraping.OpenAI.Application/
 COPY /src/WebScraping.OpenAI.Domain/*.csproj ./WebScraping.OpenAI.Domain/
@@ -17,7 +17,7 @@ COPY . .
 RUN dotnet build "WebScraping.OpenAI.Grpc.csproj" -c Release -o /app/build
 RUN dotnet publish "WebScraping.OpenAI.Grpc.csproj" -c release -o /app --self-contained -r linux-x64
 
-FROM selenium/standalone-chrome:4.21.0-20240521
+FROM selenium/standalone-chrome:dev
 USER root
 WORKDIR /app
 COPY --from=build /app .
