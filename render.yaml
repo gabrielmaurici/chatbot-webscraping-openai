@@ -3,7 +3,7 @@ services:
     name: webscraping-openai
     runtime: docker
     dockerfilePath: ./webscraping-openai/Dockerfile
-    dockerContext: ./webscraping-openai
+    dockerContext: ./webscraping-openai/
     plan: free
     envVars:
       - key: OPENAI_API_KEY
@@ -13,5 +13,5 @@ services:
     name: chatbot-whatsapp
     runtime: docker
     dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
-    dockerContext: ./chatbot-whatsapp
+    dockerContext: ./chatbot-whatsapp/
     plan: free
