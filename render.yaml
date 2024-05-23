@@ -13,5 +13,5 @@ services:
     name: chatbot-whatsapp
     runtime: docker
     dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
-    dockerContext: ./chatbot-whatsapp/
+    dockerContext: ./chatbot-whatsapp/src
     plan: free
