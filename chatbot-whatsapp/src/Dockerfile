@@ -8,7 +8,7 @@ RUN apk update && \
 
 WORKDIR /usr/src/app
 
-COPY package*.json .
+COPY /src/package.json .
 
 RUN npm install
 
