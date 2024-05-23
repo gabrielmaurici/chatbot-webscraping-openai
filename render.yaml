@@ -12,4 +12,6 @@ services:
     name: chatbot-whatsapp
     runtime: docker
     dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
+    buildCommand: npm install
+    startCommand: npm start
     plan: free
