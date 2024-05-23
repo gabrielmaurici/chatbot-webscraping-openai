@@ -3,6 +3,7 @@ services:
     name: webscraping-openai
     runtime: docker
     dockerfilePath: ./webscraping-openai/Dockerfile
+    dockerContext: ./webscraping-openai
     plan: free
     envVars:
       - key: OPENAI_API_KEY
@@ -12,6 +13,5 @@ services:
     name: chatbot-whatsapp
     runtime: docker
     dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
-    buildCommand: npm install
-    startCommand: npm start
+    dockerContext: ./chatbot-whatsapp
     plan: free
