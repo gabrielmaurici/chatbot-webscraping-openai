@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY /src/WebScraping.OpenAI.sln .
+# COPY /src/WebScraping.OpenAI.sln .
 COPY /src/WebScraping.OpenAI.Grpc/*.csproj ./WebScraping.OpenAI.Grpc/
 COPY /src/WebScraping.OpenAI.Application/*.csproj ./WebScraping.OpenAI.Application/
 COPY /src/WebScraping.OpenAI.Domain/*.csproj ./WebScraping.OpenAI.Domain/
