@@ -15,3 +15,6 @@ services:
     dockerfilePath: ./chatbot-whatsapp/src/Dockerfile
     dockerContext: ./chatbot-whatsapp/src
     plan: free
+    envVars:
+      - key: MONGODB_URL
+        sync: false

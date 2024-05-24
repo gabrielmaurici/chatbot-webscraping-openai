@@ -14,12 +14,13 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 RUN yarn add puppeteer@13.5.0
 
-RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
-    && mkdir -p /home/pptruser/Downloads /app \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /app
+# RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
+#     && mkdir -p /home/pptruser/Downloads /app \
+#     && chown -R pptruser:pptruser /home/pptruser \
+#     && chown -R pptruser:pptruser /app
 
-USER pptruser
+# USER pptruser
+USER root
 
 WORKDIR /usr/src/app
 
