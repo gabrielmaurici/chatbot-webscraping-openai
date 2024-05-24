@@ -1,5 +1,7 @@
 require('dotenv').config();
 const { Client, RemoteAuth, LocalAuth, MessageMedia } = require('whatsapp-web.js');
+const { MongoStore } = require('wwebjs-mongo');
+const mongoose = require('mongoose');
 const qrcode = require('qrcode-terminal');
 const botMenuService = require('./services/botMenuService');
 const lastMatchService = require('./services/lastMatchService');
@@ -7,10 +9,9 @@ const nextMatchService = require('./services/nextMatchService');
 const chatGptService = require('./services/chatGptService');
 const aiImageGenerateService = require('./services/aiImageGenerateService');
 
-const { MongoStore } = require('wwebjs-mongo');
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URL).then(() => {
+const mongoDbUrl = process.env.MONGODB_URL;
+console.log(mongoDbUrl);
+mongoose.connect(mongoDbUrl).then(() => {
     const store = new MongoStore({ mongoose: mongoose });
     const client = new Client({
         authStrategy: new RemoteAuth({
