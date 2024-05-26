@@ -4,6 +4,7 @@ services:
   webscraping-openai:
     build:
       context: ./webscraping-openai
+      dockerfile: Dockerfile.grpc
     container_name: webscraping-openai
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}

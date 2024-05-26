@@ -1,0 +1,40 @@
+using WebScraping.OpenAI.Application.Interfaces.WebScrapingSoccer;
+using WebScraping.OpenAI.Application.Interfaces.OpenAI;
+using WebScraping.OpenAI.IoC;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDomainDependeces(builder.Configuration);
+builder.Services.AddApllicationDependeces();
+builder.Services.AddMemoryCache();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+
+app.MapGet("api/last-match/{team}", async (string team, ILastMatchApplication lastMatchApplication) =>
+{
+    return Results.Ok(await lastMatchApplication.Get(team));
+});
+
+app.MapGet("api/next-match/{team}", async (string team, INextMatchApplication nextMatchApplication) =>
+{
+    return Results.Ok(await nextMatchApplication.Get(team));
+});
+
+app.MapGet("api/chatgpt/{ask}", async (string ask, IChatGptApllication chatGptApllication) =>
+{
+    return Results.Ok(await chatGptApllication.AskQuestion(ask));
+});
+
+app.MapGet("api/image-dall-e/{imageDescription}", async (string imageDescription, IImageDalleApplication imageDalleApplication) =>
+{
+    return Results.Ok(await imageDalleApplication.GenerateImage(imageDescription));
+});
+
+app.Run();

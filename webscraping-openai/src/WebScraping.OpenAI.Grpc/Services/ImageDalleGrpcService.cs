@@ -3,9 +3,9 @@ using WebScraping.OpenAI.Application.Interfaces.OpenAI;
 
 namespace WebScraping.OpenAI.Grpc.Services;
 
-public class ImageDalleGrpcService(IImagemDalleApplication imageDalleApplication) : ImageDalle.ImageDalleBase
+public class ImageDalleGrpcService(IImageDalleApplication imageDalleApplication) : ImageDalle.ImageDalleBase
 {
-    private readonly IImagemDalleApplication _imageDalleApplication = imageDalleApplication;
+    private readonly IImageDalleApplication _imageDalleApplication = imageDalleApplication;
 
     public override async Task<GenerateImageReply> GenerateImage(GenerateImageRequest request, ServerCallContext context)
     {

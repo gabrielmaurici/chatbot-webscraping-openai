@@ -3,7 +3,7 @@ using WebScraping.OpenAI.Domain.Services.OpenAI;
 
 namespace WebScraping.OpenAI.Application.Services.OpenAI;
 
-public class ImageDalleApplication(IImageDalleService imageDalleService) : IImagemDalleApplication
+public class ImageDalleApplication(IImageDalleService imageDalleService) : IImageDalleApplication
 {
     private readonly IImageDalleService _imageDalleService = imageDalleService;
 

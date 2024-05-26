@@ -26,5 +26,5 @@ public static class AppDependeces
         => services.AddScoped<ILastMatchApplication, LastMatchApplication>()
                    .AddScoped<INextMatchApplication, NextMatchApplication>()
                    .AddScoped<IChatGptApllication, ChatGptApplication>()
-                   .AddScoped<IImagemDalleApplication, ImageDalleApplication>();
+                   .AddScoped<IImageDalleApplication, ImageDalleApplication>();
 }

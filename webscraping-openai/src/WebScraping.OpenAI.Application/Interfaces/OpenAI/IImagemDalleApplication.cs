@@ -1,6 +1,6 @@
 namespace WebScraping.OpenAI.Application.Interfaces.OpenAI;
 
-public interface IImagemDalleApplication
+public interface IImageDalleApplication
 {
     Task<string> GenerateImage(string imageDescription);
 }
