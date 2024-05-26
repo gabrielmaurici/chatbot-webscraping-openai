@@ -9,6 +9,8 @@ COPY /src/WebScraping.OpenAI.Domain/*.csproj ./WebScraping.OpenAI.Domain/
 COPY /src/WebScraping.OpenAI.Infrastructure/*.csproj ./WebScraping.OpenAI.Infrastructure/
 COPY /src/WebScraping.OpenAI.IoC/*.csproj ./WebScraping.OpenAI.IoC/
 COPY /src/WebScraping.OpenAI.Api/*.json ./WebScraping.OpenAI.Api/
+COPY /src/WebScraping.OpenAI.Grpc/Protos/*.proto ./WebScraping.OpenAI.Grpc/Protos/
+
 RUN dotnet restore
 
 WORKDIR /src/WebScraping.OpenAI.Api/
@@ -17,7 +19,7 @@ COPY . .
 RUN dotnet build "WebScraping.OpenAI.Api.csproj" -c Release -o /app/build
 RUN dotnet publish "WebScraping.OpenAI.Api.csproj" -c release -o /app --self-contained -r linux-x64
 
-FROM selenium/standalone-chrome:beta
+FROM selenium/standalone-chrome
 USER root
 WORKDIR /app
 COPY --from=build /app .
