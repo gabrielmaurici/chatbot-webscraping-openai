@@ -1,5 +1,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using WebScraping.OpenAI.Application.Interfaces.OpenAI;
+using WebScraping.OpenAI.Application.Interfaces.WebScrapingSoccer;
 using WebScraping.OpenAI.Grpc.Services;
 using WebScraping.OpenAI.IoC;
 
@@ -10,7 +12,8 @@ builder.WebHost.ConfigureKestrel(options =>
 {
     options.Listen(IPAddress.Any, 5001, listenOptions =>
     {
-        listenOptions.Protocols = HttpProtocols.Http2;
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+        listenOptions.UseHttps();
     });
 });
 
@@ -24,6 +27,25 @@ var app = builder.Build();
 app.MapGrpcService<WebScrapingGrpcService>();
 app.MapGrpcService<ChatGptGrpcService>();
 app.MapGrpcService<ImageDalleGrpcService>();
-app.Map("/", () => "Teste deploy Render");
+
+app.MapGet("api/last-match/{team}", async (string team, ILastMatchApplication lastMatchApplication) =>
+{
+    return Results.Ok(await lastMatchApplication.Get(team));
+});
+
+app.MapGet("api/next-match/{team}", async (string team, INextMatchApplication nextMatchApplication) =>
+{
+    return Results.Ok(await nextMatchApplication.Get(team));
+});
+
+app.MapGet("api/chatgpt/{ask}", async (string ask, IChatGptApllication chatGptApllication) =>
+{
+    return Results.Ok(await chatGptApllication.AskQuestion(ask));
+});
+
+app.MapGet("api/image-dall-e/{imageDescription}", async (string imageDescription, IImageDalleApplication imageDalleApplication) =>
+{
+    return Results.Ok(await imageDalleApplication.GenerateImage(imageDescription));
+});
 
 app.Run();
