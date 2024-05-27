@@ -2,7 +2,7 @@ services:
   - type: web
     name: webscraping-openai
     runtime: docker
-    dockerfilePath: ./webscraping-openai/Dockerfile.grpc
+    dockerfilePath: ./webscraping-openai/Dockerfile
     dockerContext: ./webscraping-openai/
     plan: free
     envVars:
