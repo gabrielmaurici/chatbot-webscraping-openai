@@ -8,14 +8,12 @@ using WebScraping.OpenAI.IoC;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.Listen(IPAddress.Any, 5001, listenOptions =>
-//     {
-//         listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-//         listenOptions.UseHttps();
-//     });
-// });
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 5001, listenOptions =>
+    {
+    });
+});
 
 builder.Services.AddDomainDependeces(builder.Configuration);
 builder.Services.AddApllicationDependeces();
