@@ -24,5 +24,6 @@ var app = builder.Build();
 app.MapGrpcService<WebScrapingGrpcService>();
 app.MapGrpcService<ChatGptGrpcService>();
 app.MapGrpcService<ImageDalleGrpcService>();
+app.Map("/", () => "Teste deploy Render");
 
 app.Run();
