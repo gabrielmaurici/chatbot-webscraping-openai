@@ -10,7 +10,6 @@ COPY /src/WebScraping.OpenAI.Infrastructure/*.csproj ./WebScraping.OpenAI.Infras
 COPY /src/WebScraping.OpenAI.IoC/*.csproj ./WebScraping.OpenAI.IoC/
 COPY /src/WebScraping.OpenAI.Api/*.json ./WebScraping.OpenAI.Api/
 COPY /src/WebScraping.OpenAI.Grpc/Protos/*.proto ./WebScraping.OpenAI.Grpc/Protos/
-
 RUN dotnet restore
 
 WORKDIR /src/WebScraping.OpenAI.Api/
