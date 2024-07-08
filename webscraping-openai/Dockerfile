@@ -17,7 +17,7 @@ COPY . .
 RUN dotnet build "WebScraping.OpenAI.Grpc.csproj" -c Release -o /app/build
 RUN dotnet publish "WebScraping.OpenAI.Grpc.csproj" -c release -o /app --self-contained -r linux-x64
 
-FROM selenium/standalone-chrome
+FROM selenium/standalone-chrome:4.10.0-20230607
 USER root
 WORKDIR /app
 COPY --from=build /app .
