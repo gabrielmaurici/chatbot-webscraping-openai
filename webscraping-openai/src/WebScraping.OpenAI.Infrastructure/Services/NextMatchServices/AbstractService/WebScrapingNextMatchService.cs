@@ -68,31 +68,67 @@ public abstract class WebScrapingNextMatchService : IWebScrapingService<NextMatc
 
     private string GetTournamentName()
     {
-        return _driver.FindElement(By.XPath("//span[@class='tournamentHeader__country']")).Text;
+        try 
+        { 
+
+            return _driver.FindElement(By.XPath("//span[@class='tournamentHeader__country']")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter no nome do campeonato";
+        }
     }
 
     private string GetDepartureDateTime()
     {
-        return _driver.FindElement(By.XPath("//div[@class='duelParticipant__startTime']")).Text;
+        try 
+        {
+            return _driver.FindElement(By.XPath("//div[@class='duelParticipant__startTime']")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter a data da partida";
+        }
     }
 
     private string GetHomeTeamName()
     {
+        try 
+        {
         return _driver.FindElement(By.ClassName("duelParticipant__home"))
                       .FindElement(By.ClassName("participant__participantNameWrapper"))
                       .FindElement(By.ClassName("participant__participantName")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter o nome do time da casa";
+        }
     }
 
     private string GetVisitingTeamName()
     {
-        return _driver.FindElement(By.ClassName("duelParticipant__away"))
-                      .FindElement(By.ClassName("participant__participantNameWrapper"))
-                      .FindElement(By.ClassName("participant__participantName")).Text;
+        try 
+        {
+            return _driver.FindElement(By.ClassName("duelParticipant__away"))
+                        .FindElement(By.ClassName("participant__participantNameWrapper"))
+                        .FindElement(By.ClassName("participant__participantName")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível encontrar o nome do time visitante";
+        }
     }
 
     private string GetStadiumName()
     {
-        return _driver.FindElement(By.ClassName("matchInfoItem__value")).Text;
+        try 
+        { 
+            return _driver.FindElement(By.XPath("//span[text()='Estádio']/ancestor::div/following-sibling::div")).Text;
+        }
+        catch
+        { 
+            return "Não foi possível obter o nome do estádio";
+        }
     }
 
 }

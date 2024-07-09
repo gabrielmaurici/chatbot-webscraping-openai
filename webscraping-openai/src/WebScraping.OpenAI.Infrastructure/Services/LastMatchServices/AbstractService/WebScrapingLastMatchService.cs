@@ -19,6 +19,7 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
 
         _driver = new ChromeDriver(options);
         _teamResultsUrl = teamResultsUrl;
+        _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
     }
 
 
@@ -57,7 +58,6 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
     private void GoToUrlOfLatestMatch()
     {
         _driver.Navigate().GoToUrl(_teamResultsUrl);
-        Thread.Sleep(300);
     }
 
     private void ClickAcceptCookies()
@@ -70,80 +70,114 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
     {
         var resultado = _driver.FindElement(By.ClassName("event__match"));
         resultado.Click();
-        Thread.Sleep(800);
     }
 
     private string GetTournamentName()
     {
-        return _driver.FindElement(By.XPath("//span[@class='tournamentHeader__country']")).Text;
+        try 
+        {
+            return _driver.FindElement(By.XPath("//span[@class='tournamentHeader__country']")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter o nome do campeonato";
+        }
     }
 
     private string GetDepartureDateTime()
     {
-        return _driver.FindElement(By.XPath("//div[@class='duelParticipant__startTime']")).Text;
+        try 
+        {
+            return _driver.FindElement(By.XPath("//div[@class='duelParticipant__startTime']")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter a data da partida";
+        }
     }
 
     private string GetStadiumName()
     {
-        return _driver.FindElement(By.ClassName("matchInfoItem__value")).Text;
+        try {
+            return _driver.FindElement(By.XPath("//span[text()='Estádio']/ancestor::div/following-sibling::div")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter o nome do estádio";
+        }
     }
 
     private string GetHomeTeamName()
     {
-        return _driver.FindElement(By.ClassName("duelParticipant__home"))
-                      .FindElement(By.ClassName("participant__participantNameWrapper"))
-                      .FindElement(By.ClassName("participant__participantName")).Text;
+        try 
+        {
+            return _driver.FindElement(By.ClassName("duelParticipant__home"))
+                        .FindElement(By.ClassName("participant__participantNameWrapper"))
+                        .FindElement(By.ClassName("participant__participantName")).Text;
+        } 
+        catch 
+        {
+            return "Não foi possível obter o nome do time da casa";
+        }
     }
 
     private string GetVisitingTeamName()
     {
-        return _driver.FindElement(By.ClassName("duelParticipant__away"))
-                      .FindElement(By.ClassName("participant__participantNameWrapper"))
-                      .FindElement(By.ClassName("participant__participantName")).Text;
+        try 
+        {
+            return _driver.FindElement(By.ClassName("duelParticipant__away"))
+                        .FindElement(By.ClassName("participant__participantNameWrapper"))
+                        .FindElement(By.ClassName("participant__participantName")).Text;
+        }
+        catch 
+        {
+            return "não foi possível obter o nome do time visitante";
+        }
     }
 
     private string GetMatchScore()
     {
-        return _driver.FindElement(By.XPath("//div[@class='detailScore__wrapper']")).Text;
+        try 
+        {
+            return _driver.FindElement(By.XPath("//div[@class='detailScore__wrapper']")).Text;
+        }
+        catch 
+        {
+            return "Não foi possível obter o placar da partida";
+        }
     }
 
     private StatisticsModel GetStatistics()
     {
-        var buttonStatistics = _driver.FindElements(By.ClassName("_tabsSecondary_1b0gr_48"));
-        foreach(var button in buttonStatistics) 
-        {
-            var buttonName = button.Text.Replace("\n", " ").ToUpper();
-            if(buttonName.Contains("ESTATÍSTICAS"))
+        try {
+            var statistics = new StatisticsModel();
+            var statisticsElement = _driver.FindElements(By.XPath("//div[text()='Estatísticas']/ancestor::div"));
+            foreach (var statistic in statisticsElement)
             {
-                button.Click();
+                var statisticName = statistic.Text.Replace("\n", " ").ToUpper();
+                if (statisticName.Contains("POSSE DE BOLA"))
+                {
+                    statistics.HomeBallPossession = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                    statistics.VisitingBallPossession = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+                }
+                if (statisticName.Contains("TENTATIVAS DE GOL"))
+                {
+                    statistics.HomeGoalAttempts = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                    statistics.VisitingGoalAttempts = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+                }
+                if (statisticName.Contains("FINALIZAÇÕES"))
+                {
+                    statistics.HomeShotsOnGoal = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
+                    statistics.VisitingShotsOnGoal = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
+                }
             }
-        }
-        Thread.Sleep(500);
 
-        var statistics = new StatisticsModel();
-        var statisticsElement = _driver.FindElements(By.XPath("//div[@class='_category_n1rcj_16']"));
-        foreach (var statistic in statisticsElement)
-        {
-            Console.WriteLine("estatistic " + statistic.Text);
-            var statisticName = statistic.Text.Replace("\n", " ").ToUpper();
-            if (statisticName.Contains("POSSE DE BOLA"))
-            {
-                statistics.HomeBallPossession = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                statistics.VisitingBallPossession = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
-            if (statisticName.Contains("TENTATIVAS DE GOL"))
-            {
-                statistics.HomeGoalAttempts = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                statistics.VisitingGoalAttempts = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
-            if (statisticName.Contains("CHUTES NO GOL"))
-            {
-                statistics.HomeShotsOnGoal = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                statistics.VisitingShotsOnGoal = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-            }
+            return statistics;
         }
-
-        return statistics;
+        catch 
+        {
+            return new StatisticsModel();
+        }
     }
 
     private string GetUrlBestMoments()
@@ -152,21 +186,17 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
         {
             var sumaryButton = _driver.FindElement(By.XPath("//*[@id='detail']/div[7]/div/a[1]/button"));
             sumaryButton.Click();
-            Thread.Sleep(500);
 
             var bestMomentsElement = _driver.FindElement(By.ClassName("matchReportBoxes"));
             bestMomentsElement.Click();
 
-            Thread.Sleep(1000);
             var urlMoments = _driver.FindElement(By.TagName("object")).GetAttribute("data");
 
             return urlMoments;
         }
-        catch(Exception ex) 
+        catch
         {
-            if (ex is NoSuchElementException || ex is ElementNotInteractableException)
-                return "Não foi possível encontrar o vídeo com os melhores momentos da partida";
-            throw;
+            return "Não foi possível encontrar o vídeo com os melhores momentos da partida";
         }
     }
 }
