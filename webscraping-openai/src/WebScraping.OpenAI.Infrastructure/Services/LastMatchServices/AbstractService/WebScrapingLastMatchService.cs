@@ -36,7 +36,6 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
         var homeTeamName = GetHomeTeamName();
         var visitingTeamName = GetVisitingTeamName();
         var matchScore = GetMatchScore();
-        var statisticsModel = GetStatistics();
         var urlMoments = GetUrlBestMoments();
 
         var response = new LastMatchModel
@@ -47,7 +46,6 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
             HomeTeam = homeTeamName,
             Score = matchScore,
             VisitingTeam = visitingTeamName,
-            Statistics = statisticsModel,
             UrlBestMoments = urlMoments
         };
 
@@ -144,39 +142,6 @@ public abstract class WebScrapingLastMatchService : IWebScrapingService<LastMatc
         catch 
         {
             return "Não foi possível obter o placar da partida";
-        }
-    }
-
-    private StatisticsModel GetStatistics()
-    {
-        try {
-            var statistics = new StatisticsModel();
-            var statisticsElement = _driver.FindElements(By.XPath("//div[text()='Estatísticas']/ancestor::div"));
-            foreach (var statistic in statisticsElement)
-            {
-                var statisticName = statistic.Text.Replace("\n", " ").ToUpper();
-                if (statisticName.Contains("POSSE DE BOLA"))
-                {
-                    statistics.HomeBallPossession = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                    statistics.VisitingBallPossession = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-                }
-                if (statisticName.Contains("TENTATIVAS DE GOL"))
-                {
-                    statistics.HomeGoalAttempts = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                    statistics.VisitingGoalAttempts = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-                }
-                if (statisticName.Contains("FINALIZAÇÕES"))
-                {
-                    statistics.HomeShotsOnGoal = statistic.FindElement(By.ClassName("_homeValue_bwnrp_10")).Text;
-                    statistics.VisitingShotsOnGoal = statistic.FindElement(By.ClassName("_awayValue_bwnrp_14")).Text;
-                }
-            }
-
-            return statistics;
-        }
-        catch 
-        {
-            return new StatisticsModel();
         }
     }
 

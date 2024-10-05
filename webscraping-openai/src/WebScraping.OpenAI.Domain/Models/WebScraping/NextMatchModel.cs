@@ -6,7 +6,7 @@ public class NextMatchModel : MatchBaseModel
     {
         return $"🏆 *Campeonato {Tournament}*\n\n" +
                $"📆 *Data:* {Date.Replace(".", "/").Replace(" ", " - ")} hrs\n" +
-               $"🏟️ *Estádio*: {Stadium}\n" +
+               $"🏟️ *Estádio*: {Stadium.Replace("\n", " ")}\n" +
                $"⚽ *Partida:* {HomeTeam} vs {VisitingTeam}";
     }
 }

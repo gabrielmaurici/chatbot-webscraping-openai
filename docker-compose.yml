@@ -16,8 +16,6 @@ services:
     build:
       context: ./chatbot-whatsapp/src
     container_name: chatbot
-    environment:
-      - MONGODB_URI=${MONGODB_URI}
     networks:
       - chatbot-webscraping-openai
     ports:
