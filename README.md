@@ -2,12 +2,6 @@
 
 Bot de WhatsApp desenvolvido em Node.js que realiza chamadas gRPC para um server .NET. O server .NET integra as APIs da OpenAI, permitindo interações com DALL-E e ChatGPT. Além disso, o projeto inclui um serviço de web scraping que coleta dados sobre resultados e próximas partidas de futebol.
 
-![Bot](assets/bot.png)
-![IA Chat](assets/ia-chat.png)
-![IA Imagem](assets/ia-imagem.png)
-![Ultima pártida](assets/ultima-partida.png)
-![Próxima partida](assets/proxima-partida.png)
-
 
 ## 🛠️ Construído com
 
@@ -20,8 +14,8 @@ Bot de WhatsApp desenvolvido em Node.js que realiza chamadas gRPC para um server
 
 ## 📋 Pré-requisitos
 
-* [Docker e Docker Compose](https://www.docker.com/)
-* [OpenAI API Key](https://platform.openai.com/docs/quickstart/create-and-export-an-api-key)
+* [Docker e Docker Compose](https://www.docker.com/) - Para rodar o projeto
+* [OpenAI API Key](https://platform.openai.com/docs/quickstart/create-and-export-an-api-key) - Criar API KEY e exportar uma variavel de ambiente para configurar o projeto
 
 Além de criar a API KEY, é necessário criar um projeto, permitir que o projeto acesse os modelos gpt-3.5-turbo e dall-e-3
 ![Permitir acesso aos modelos OpenAI](assets/models.png)
@@ -40,5 +34,14 @@ Com o projeto pronto para iniciar, rode o docker compose na raiz do projeto:
 docker compose up
 ```
 
-Ao iniciar o bot, aparecerá um QR Code para você ler pelo whats app e permitir que o bot possa ler e responder as mensagens. Após ler o QR Code uma mensagem irá informar que o client foi conectado no terminal.
+Ao iniciar o bot, aparecerá um QR Code para você ler pelo whats app e permitir que o bot possa ler e responder as mensagens. Após ler o QR Code uma mensagem irá informar que o client foi conectado no terminal:
+
 ![QR Code Whats App](assets/qr-code-wp.png)
+
+Alguns exemplos das funcionalidades:
+
+![Bot](assets/bot.png)
+![IA Chat](assets/ia-chat.png)
+![IA Imagem](assets/ia-imagem.png)
+![Ultima pártida](assets/ultima-partida.png)
+![Próxima partida](assets/proxima-partida.png)
